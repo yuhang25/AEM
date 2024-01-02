@@ -1,0 +1,20 @@
+<mvc:View controllerName="samplecode.controller.List"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Select
+                id="MobileDropdownSelection"
+                forceSelection="false"
+                class="sapUiVisibleOnlyOnPhone"
+                selectedKey="{/DefaultSelection}"
+                width="100%"
+                items="{
+                    path: '/Selection'
+                }"
+                change="onSelectChange">
+                <core:ListItem key="{Id}" text="{Name} - {additionalText}" icon="{Icon}"/>
+            </Select>
+        </content>
+    </Page>
+</mvc:View>

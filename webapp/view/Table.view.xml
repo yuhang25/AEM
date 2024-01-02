@@ -1,0 +1,56 @@
+<mvc:View controllerName="samplecode.controller.List"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Table 
+                id="SalesOrderTable"
+                width="auto"
+                items="{ path: '/' }">
+                <headerToolbar>
+                    <Toolbar class="EnlargeSearchField">
+                        <SearchField search=".onFilterSOnCustomer"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column  hAlign="Begin">
+                        <Text text="{i18n>SOCreatedDate}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>SalesOrder}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>CustomerCode}" />
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>CustomerName}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>TotalAmount}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>GM1Amount}" />
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>GM1%}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem 
+                        type="Navigation" press=".onPressNavigation">
+                        <cells>
+                            <Text text="{SoCreatedDate_DISPLAY}" />
+                            <Text text="{SalesOrder}" /> 
+                            <Text text="{CustomerCode}" /> 
+                            <Text text="{CustomerName}" /> 
+                            <Text text="{TotalAmountExVat}" /> 
+                            <Text text="{Gm1}" />   
+                            <Text text="{Gm1Percent}" />
+                            <Text text="{Guid}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

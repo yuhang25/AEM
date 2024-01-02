@@ -1,0 +1,170 @@
+<mvc:View controllerName="samplecode.controller.List"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+
+    /*
+        if like this, use the set property
+        items="{
+            path: '/PickingListData'
+        }"
+    */
+
+        <content>
+            <!-- This is Normal Listing structure -->
+            <List 
+                id="PickingList"
+                mode="MultiSelect"
+                items="{ path: '/' }"
+                selectionChange="onSelectItem"
+                includeItemInSelection="true">
+                <infoToolbar>
+                    <OverflowToolbar visible="false" id="idInfoToolbar">
+                        <Label id="idFilterLabel" />
+                    </OverflowToolbar>
+                </infoToolbar>
+                <ObjectListItem 
+                    title="{SourceHandlingUnit}"
+                    type="Active"
+                    number="{
+                            parts:[{path:'TotalAmountExVat'},{path:'TotAmtCurrency'}],
+                            type: 'sap.ui.model.type.number',
+                            formatOptions: {showMeasure: false}
+                        }"
+                    numberUnit="{i18n>MobileTotalAmtExclVAT}"
+                    press="onSelectStorage">
+                    <firstStatus>
+                        <ObjectStatus text="{StockDocumentCategory}"
+                            class="sapUiSmallMarginBottom"
+                                state="Success"
+                                inverted="true">
+                        </ObjectStatus>
+                    </firstStatus>
+                    <ObjectAttribute text="{ProductName} - {MAKTX}" visible="{ProdMatxVisible}" active="true" press="onShowProdImage"></ObjectAttribute>
+                    <ObjectAttribute text="{Batch} - {ShelfLifeExpirationDate}" visible="{BatchExpDateVisible}"></ObjectAttribute>
+                    <ObjectAttribute text="{EWMStockTypeName}" visible="{StockVisible}"></ObjectAttribute>
+                    <ObjectAttribute text="{DOCNO} - {PickRequest}" visible="{DocPQVisible}"></ObjectAttribute>
+                    <ObjectAttribute text="{WarehouseOrder} - {EWMWarehouseTask}" visible="{WHOrdTaskVisible}"></ObjectAttribute>
+                </ObjectListItem>
+            </List>
+            <!-- End of Normal Listing Structure-->
+
+            <!-- Listing with format number -->
+                <List
+					id="MobileSOTable"
+					class="sapUiVisibleOnlyOnPhone"
+					items="{ path: '/' }">
+					<headerToolbar>
+						<Toolbar class="EnlargeSearchField">
+							<SearchField  search=".onFilterSOnCustomerONMobile" class="sapUiNoMargin" placeholder="{i18n>Search}"/>
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ObjectListItem
+							type="Active"
+							press=".onListPressNavigation"
+							title="{SalesOrder}"
+							number="{
+								parts:[{path:'TotalAmountExVat'},{path:'TotAmtCurrency'}],
+								type: 'sap.ui.model.type.number',
+								formatOptions: {showMeasure: false}
+							}"
+							numberUnit="{i18n>MobileTotalAmtExclVAT}">
+						
+						<ObjectAttribute text="{CustomerName} {(CustomerCode)}" />
+						<ObjectAttribute text="Req dd: {SoCreatedDate_DISPLAY}" />
+						<ObjectAttribute text="GM1 Amt: {Gm1} ({Gm1Percent}%)" />
+						</ObjectListItem>
+					</items>
+				</List>	
+            <!-- End of Listing with format number -->
+
+
+            <!-- Custom Listing Structure - this one you can have input / dropdown list into the list item -->
+                <List 
+                    id="PickingProductListItem"
+                    width="100%"
+                    items="{ path: '/' }"
+                    class="sapUi-Std-PaddingS"
+                    selectionChange="onSelectList"
+                    includeItemInSelection="false">
+                    <CustomListItem id="custom-list" type="Active" press="onPressBinList">
+                        <HBox class="sapUiSmallMarginBeginEnd" justifyContent="SpaceBetween">
+                            <VBox>
+                                <HBox> 
+                                    <Title text="{WarehouseTaskItem}" />
+                                </HBox>
+                                <HBox>
+                                    <Link text="{ProductName} - {MAKTX}" wrapping="true" visible="{ProductMaktxVisible}" press="pressProdImage" ariaHasPopup="Dialog"/>
+                                </HBox>
+                            </VBox>
+                            
+                            <VBox width="8rem">
+                                <Input  placeholder="" value="{TargetQuantityInAltvUnit}" type="Number" width="95%" />
+                                <Text   text="{BaseUnit}" textAlign="Right" width="93%" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBeginEnd">
+                            <VBox >
+                                <HBox>
+                                    <Label text="{Batch} - {ShelfLifeExpirationDate}" wrapping="true" visible="{BatchExpiryVisible}"/>
+                                </HBox>
+                                <HBox>
+                                    <Label text="{EWMStockTypeName}" visible="{StockTypeVisible}"/>
+                                </HBox>
+                            </VBox>
+                            <VBox>
+                                <ObjectStatus 
+                                    text="{Status}" state="{StatusColor}"
+                                    inverted="true" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBeginEnd">
+                            <VBox>
+                                <HBox>
+                                    <Label text="{DOCNO} - {QDOCNO} " visible="{DocQNoVisible}"></Label>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBeginEnd">
+                            <VBox>
+                                <HBox>
+                                    <Label text="{WarehouseOrder} - {EWMWarehouseTask}" visible="{WHOrderTaskVisible}"></Label>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBeginEnd">
+                            <VBox>
+                                <HBox>
+                                    <!-- <Label text="{SourceHandlingUnit} - {DestinationStorageBin} " visible="{HUStorageVisible}"></Label> -->
+                                    <Label text="{HUStorageBin} " visible="{HUStorageVisible}"></Label>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBeginEnd">
+                            <VBox>
+                                <HBox>
+                                    <Label text="Exception: "></Label>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBottom sapUiSmallMarginBeginEnd">
+                            <ComboBox 
+                                items="{ path: '/' }"
+                                showSecondaryValues="true"
+                                change="onComboBoxChange">
+                                <items>
+                                    <core:ListItem 
+                                        key="{WarehouseTaskExceptionCode}" 
+                                        text="{WarehouseTaskExceptionCode}" 
+                                        additionalText="{ExceptionCodeName}">
+                                    </core:ListItem>
+                                </items>
+                            </ComboBox>
+                        </HBox>
+                    </CustomListItem>
+                </List>
+            <!-- End of Custom Listing Structure-->
+        </content>
+    </Page>
+</mvc:View>
